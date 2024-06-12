@@ -1,0 +1,55 @@
+"use client";
+import { AlertModal } from "@/components/modal/alert-modal";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Posts } from "@/constants/data";
+import { Edit, MoreHorizontal, Trash } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useState } from "react";
+import { Printer } from "lucide-react";
+
+interface CellActionProps {
+  data: Posts;
+}
+
+export const CellAction: React.FC<CellActionProps> = ({ data }) => {
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+  const onConfirm = async () => {};
+
+  return (
+    <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={onConfirm}
+        loading={loading}
+      />
+      <DropdownMenu modal={false}>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <Printer className="h-4 w-4" /> {/* Yazıcı emojisi eklendi */}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+
+          <DropdownMenuItem onClick={() => console.log("Print action")}>
+            {" "}
+            {/* Yazdırma eylemi ekledik */}
+            <Printer className="mr-2 h-4 w-4" /> Print
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
+  );
+};

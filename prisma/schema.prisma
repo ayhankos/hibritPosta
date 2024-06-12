@@ -1,0 +1,88 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Post modeli
+model Post {
+  id           Int      @id @default(autoincrement())
+  customerName         String
+  postalCode   String  
+  date         DateTime
+  adres        String
+  isStatus String
+  sideOption String
+  colorOption String
+  envelopeType String
+  brochure String
+  surveyType String
+  commitment String
+  customerId Int
+  file       String
+}
+
+// Kullanıcı modeli
+model User {
+  id                Int            @id @default(autoincrement())
+  username          String         @unique
+  name              String
+  password          String
+  email             String         @unique
+  role              Role
+  company           Company?       @relation(fields: [companyId], references: [id])
+  companyId         Int?
+  printingCenter    PrintingCenter? @relation(fields: [printingCenterId], references: [id])
+  printingCenterId  Int?
+}
+
+// Rol modeli
+enum Role {
+  GENERAL_ADMIN
+  COMPANY_ADMIN
+  COMPANY_STAFF
+  PRINTING_CENTER_ADMIN
+  PRINTING_CENTER_STAFF
+  UNASSIGNED_USER
+}
+
+// Şirket modeli
+model Company {
+  id          Int       @id @default(autoincrement())
+  name        String
+  location    String
+  employees   User[]
+  pricingTypes PricingTypes[] 
+}
+
+// Baskı Merkezi modeli
+model PrintingCenter {
+  id         Int      @id @default(autoincrement())
+  name       String
+  location   String
+  staff      User[]
+}
+
+model PricingTypes{
+  id              Int      @id @default(autoincrement())
+  name            String
+  quantitiyStart  Int
+  quantitiyEnd    Int
+  company Company @relation(fields: [companyId], references: [id])
+  companyId Int
+  price Int
+}
+
+model uploadFile {
+  id        Int      @id @default(autoincrement())
+  title     String?
+  content   String?
+  file      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
