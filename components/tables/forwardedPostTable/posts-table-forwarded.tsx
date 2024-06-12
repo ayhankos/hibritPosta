@@ -43,6 +43,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   searchKey: string;
   pageNo: number;
+  totalUsers: number;
   pageSizeOptions?: number[];
   pageCount: number;
   searchParams?: {
@@ -168,11 +169,9 @@ export function PostsTable<TData, TValue>({
     <div className="grid flex-1 items-start gap-4 md:gap-8 overflow-auto px-4 p-2">
       <Input
         placeholder={`Search ${searchKey}...`}
-        value={
-          (table.getColumn("postalCode")?.getFilterValue() as string) ?? ""
-        }
+        value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
         onChange={(event) =>
-          table.getColumn("postalCode")?.setFilterValue(event.target.value)
+          table.getColumn(searchKey)?.setFilterValue(event.target.value)
         }
         className="w-full md:max-w-sm"
       />

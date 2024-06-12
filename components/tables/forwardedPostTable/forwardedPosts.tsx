@@ -170,7 +170,8 @@ const ForwardedPosts: React.FC<ParamsProps> = ({
         <Separator />
 
         <PostsTable
-          searchKey="postalCode"
+          totalUsers={totalPosts}
+          searchKey="customerName"
           pageNo={page}
           columns={columns(selectedRows, setSelectedRows)}
           data={data}
