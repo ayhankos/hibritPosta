@@ -14,5 +14,5 @@ export const formSchema = z.object({
   surveyType: z.string(), // anket
   commitment: z.string(), // taahhüt
   customerId: z.number(),
-  file: z.string(),
+  file: z.string().nullable(),
 });

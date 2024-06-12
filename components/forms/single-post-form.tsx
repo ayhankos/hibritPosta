@@ -65,6 +65,9 @@ export const SinglePostsForm: React.FC<PostFormProps<unknown>> = ({
       brochure: "Evet",
       customerId: 1,
       date: new Date(),
+      file: "null",
+      sideOption: "null",
+      colorOption: "null",
 
       // isStatus harici silinecek , test etmek amacıyla yapıldı şuanlık
     },

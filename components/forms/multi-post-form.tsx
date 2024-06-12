@@ -283,7 +283,7 @@ export const MultiPostsForm: React.FC<PostFormProps<any>> = ({
                           field.onChange(value);
                           handleSelectFile(value);
                         }}
-                        defaultValue={field.value}
+                        defaultValue={field.value ?? ""}
                       >
                         <SelectTrigger className="w-[11.25rem]">
                           <SelectValue placeholder="File Name" />
