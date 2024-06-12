@@ -3,7 +3,11 @@ import ForwardedPosts from "@/components/tables/forwardedPostTable/forwardedPost
 import { Post } from "@prisma/client";
 import { postGet } from "@/utils/post/getPosts";
 
-export default async function page({ searchParams }: { searchParams: any }) {
+export default async function page({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   let data: Post[] = await postGet();
   return (
     <>

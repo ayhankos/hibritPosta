@@ -3,6 +3,8 @@ import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { Post } from "@prisma/client";
+import { Button } from "@/components/ui/button";
+import { ArrowUpDown } from "lucide-react";
 
 export const columns = (
   selectedRows: Post[],
@@ -53,14 +55,28 @@ export const columns = (
     enableHiding: false,
   },
   {
-    accessorKey: "name",
+    accessorKey: "customerName",
     header: "NAME - SURNAME",
-    cell: ({ row }) => <>{`${row.original.customerName} `}</>,
-    enableColumnFilter: true,
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("customerName")}</div>
+    ),
   },
   {
     accessorKey: "postalCode",
-    header: "POSTA KODU",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Postal Code
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("postalCode")}</div>
+    ),
   },
   {
     accessorKey: "commitment",

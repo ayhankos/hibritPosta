@@ -105,7 +105,7 @@ const breadcrumbItems = [
   { title: "İletilen Postalar", link: "/dashboard/forwardedPosts" },
 ];
 
-type ForwardedPostsProps = {
+type ParamsProps = {
   searchParams: {
     [key: string]: string | string[] | undefined;
   };
@@ -113,11 +113,11 @@ type ForwardedPostsProps = {
   totalPosts: number;
 };
 
-export default function ForwardedPosts({
+const ForwardedPosts: React.FC<ParamsProps> = ({
   searchParams,
-  allPosts,
   totalPosts,
-}: ForwardedPostsProps) {
+  allPosts,
+}) => {
   const page = Number(searchParams.page) || 1;
   const pageLimit = Number(searchParams.limit) || 12;
   const pageCount = Math.ceil(totalPosts / pageLimit);
@@ -170,7 +170,7 @@ export default function ForwardedPosts({
         <Separator />
 
         <PostsTable
-          searchKey="name"
+          searchKey="postalCode"
           pageNo={page}
           columns={columns(selectedRows, setSelectedRows)}
           data={data}
@@ -190,4 +190,5 @@ export default function ForwardedPosts({
       )}
     </ScrollArea>
   );
-}
+};
+export default ForwardedPosts;

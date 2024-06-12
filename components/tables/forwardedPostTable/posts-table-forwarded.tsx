@@ -8,9 +8,11 @@ import {
   getPaginationRowModel,
   useReactTable,
   ColumnFiltersState,
+  SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 import React from "react";
-import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -51,15 +53,14 @@ interface DataTableProps<TData, TValue> {
 export function PostsTable<TData, TValue>({
   columns,
   data,
-  pageNo,
   searchKey,
   pageCount,
   pageSizeOptions = [10, 20, 30, 40, 50],
-}: DataTableProps<TData, TValue>): React.JSX.Element {
+}: DataTableProps<TData, TValue>) {
   const router = useRouter();
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  // Search params
   const page = searchParams?.get("page") ?? "1";
   const pageAsNumber = Number(page);
   const fallbackPage =
@@ -67,6 +68,12 @@ export function PostsTable<TData, TValue>({
   const per_page = searchParams?.get("limit") ?? "10";
   const perPageAsNumber = Number(per_page);
   const fallbackPerPage = isNaN(perPageAsNumber) ? 10 : perPageAsNumber;
+
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    [],
+  );
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const createQueryString = React.useCallback(
     (params: Record<string, string | number | null>) => {
@@ -107,17 +114,23 @@ export function PostsTable<TData, TValue>({
     data,
     columns,
     pageCount: pageCount ?? -1,
-    getCoreRowModel: getCoreRowModel(),
-    onPaginationChange: setPagination,
-    getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    onRowSelectionChange: setRowSelection,
+
+    state: {
+      sorting,
+      columnFilters,
+      pagination: { pageIndex, pageSize },
+      rowSelection,
+    },
+    onPaginationChange: setPagination,
     manualPagination: true,
     manualFiltering: true,
-    state: {
-      pagination: { pageIndex, pageSize },
-      columnFilters,
-    },
   });
 
   const searchValue = table.getColumn(searchKey)?.getFilterValue() as string;
@@ -149,24 +162,21 @@ export function PostsTable<TData, TValue>({
     }
 
     setPagination((prev) => ({ ...prev, pageIndex: 0 }));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue]);
 
   return (
-    <>
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Search by name..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-      </div>
-
-      <ScrollArea className="rounded-md border h-[calc(80vh-220px)]">
+    <div className="grid flex-1 items-start gap-4 md:gap-8 overflow-auto px-4 p-2">
+      <Input
+        placeholder={`Search ${searchKey}...`}
+        value={
+          (table.getColumn("postalCode")?.getFilterValue() as string) ?? ""
+        }
+        onChange={(event) =>
+          table.getColumn("postalCode")?.setFilterValue(event.target.value)
+        }
+        className="w-full md:max-w-sm"
+      />
+      <ScrollArea className="h-[calc(80vh-220px)] rounded-md border">
         <Table className="relative">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -218,11 +228,11 @@ export function PostsTable<TData, TValue>({
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
-      <div className="flex flex-col gap-2 sm:flex-row items-center justify-end space-x-2 py-4">
-        <div className="flex items-center justify-between w-full">
+      <div className="flex flex-col items-center justify-end gap-2 space-x-2 py-4 sm:flex-row">
+        <div className="flex w-full items-center justify-between">
           <div className="flex-1 text-sm text-muted-foreground">
             {table.getFilteredSelectedRowModel().rows.length} of{" "}
-            {table.getFilteredRowModel().rows.length} row(s) selected.
+            {table.getFilteredRowModel().rows.length} players selected.
           </div>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
             <div className="flex items-center space-x-2">
@@ -241,7 +251,7 @@ export function PostsTable<TData, TValue>({
                   />
                 </SelectTrigger>
                 <SelectContent side="top">
-                  {pageSizeOptions.map((pageSize: any) => (
+                  {pageSizeOptions.map((pageSize) => (
                     <SelectItem key={pageSize} value={`${pageSize}`}>
                       {pageSize}
                     </SelectItem>
@@ -251,7 +261,7 @@ export function PostsTable<TData, TValue>({
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-between sm:justify-end gap-2 w-full">
+        <div className="flex w-full items-center justify-between gap-2 sm:justify-end">
           <div className="flex w-[100px] items-center justify-center text-sm font-medium">
             Page {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
@@ -296,6 +306,6 @@ export function PostsTable<TData, TValue>({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
