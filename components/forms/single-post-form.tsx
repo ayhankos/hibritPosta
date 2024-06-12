@@ -66,9 +66,10 @@ export const SinglePostsForm: React.FC<PostFormProps<unknown>> = ({
       customerId: 1,
       date: new Date(),
       file: "null",
-      sideOption: "null",
-      colorOption: "null",
-
+      sideOption: "Tek Taraflı",
+      colorOption: "Siyah Beyaz",
+      customerName: "",
+      postMessage: "",
       // isStatus harici silinecek , test etmek amacıyla yapıldı şuanlık
     },
   });
@@ -244,6 +245,25 @@ export const SinglePostsForm: React.FC<PostFormProps<unknown>> = ({
                         disabled={loading}
                         placeholder="Post name"
                         {...field}
+                        value={field.value ?? ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="postMessage"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Gönderilecek Kişi</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        placeholder="Post message"
+                        {...field}
+                        value={field.value ?? ""}
                       />
                     </FormControl>
                     <FormMessage />

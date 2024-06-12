@@ -25,6 +25,7 @@ export async function POST(request: Request) {
         commitment: formData.commitment,
         customerId: formData.customerId,
         file: formData.file,
+        postMessage: formData.postMessage,
       },
     });
 

@@ -13,6 +13,7 @@ datasource db {
 model Post {
   id           Int      @id @default(autoincrement())
   customerName         String
+  postMessage             String
   postalCode   String  
   date         DateTime
   adres        String

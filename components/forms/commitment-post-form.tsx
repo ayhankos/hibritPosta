@@ -83,6 +83,7 @@ export const CommitmentPostForm: React.FC<PostFormProps<unknown>> = ({
       date: new Date(),
       postalCode: "12345",
       customerName: "Müşteri Adı",
+      postMessage: "Posta Mesajı",
       adres: "Adres",
       // isStatus harici silinecek , test etmek amacıyla yapıldı şuanlık
     },

@@ -42,7 +42,7 @@ import FileUpload from "../file-upload";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { formSchema } from "./postFormSchema";
+import { formSchema } from "./multiPostFormSchema";
 
 type PostFormValues = z.infer<typeof formSchema>;
 
@@ -71,8 +71,9 @@ export const MultiPostsForm: React.FC<PostFormProps<any>> = ({
       customerId: 1,
       date: new Date(),
       postalCode: "12345",
-      customerName: "Müşteri Adı",
       adres: "Adres",
+      customerName: "Müşteri Adı",
+      postMessage: "Mesaj",
       // isStatus harici silinecek , test etmek amacıyla yapıldı şuanlık
     },
   });
