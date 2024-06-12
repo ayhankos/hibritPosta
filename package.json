@@ -16,7 +16,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^3.3.2",
     "@material-tailwind/react": "^2.1.9",
-    "@prisma/client": "^5.14.0",
+    "@prisma/client": "^5.15.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -94,7 +94,7 @@
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "prettier": "3.0.3",
-    "prisma": "^5.14.0",
+    "prisma": "^5.15.0",
     "tailwindcss": "^3.4.3"
   },
   "description": "<picture>   <source media=\"(prefers-color-scheme: dark)\" srcset=\"https://user-images.githubusercontent.com/9113740/201498864-2a900c64-d88f-4ed4-b5cf-770bcb57e1f5.png\">   <source media=\"(prefers-color-scheme: light)\" srcset=\"https://user-images.githubusercontent.com/9113740/201498152-b171abb8-9225-487a-821c-6ff49ee48579.png\"> </picture>",
