@@ -70,7 +70,7 @@ export const MultiPostsForm: React.FC<PostFormProps<any>> = ({
       brochure: "Evet",
       customerId: 1,
       date: new Date(),
-      postalCode: "12345",
+      postalCode: "multiple",
       adres: "Adres",
       customerName: "Müşteri Adı",
       postMessage: "Mesaj",
