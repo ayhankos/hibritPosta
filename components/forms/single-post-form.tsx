@@ -257,7 +257,7 @@ export const SinglePostsForm: React.FC<PostFormProps<unknown>> = ({
                 name="postMessage"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Gönderilecek Kişi</FormLabel>
+                    <FormLabel>Mesaj</FormLabel>
                     <FormControl>
                       <Input
                         disabled={loading}
